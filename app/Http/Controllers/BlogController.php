@@ -11,10 +11,15 @@ class BlogController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     *
      */
+
+    protected $limit = 3;
+
     public function index()
     {
-        $posts = Post::all();
+
+        $posts = Post::with('author')->latestFirst()->simplePaginate($this->limit);
         return view('blog.index', compact('posts'));
     }
 
