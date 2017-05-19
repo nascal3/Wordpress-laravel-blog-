@@ -50,10 +50,9 @@ class BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::FindOrFail($id);
-        return view('blog.show', compact('post'));
+       return view('blog.show', compact('post'));
     }
 
     /**
