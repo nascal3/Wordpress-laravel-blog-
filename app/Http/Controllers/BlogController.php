@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\category;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -39,6 +40,13 @@ class BlogController extends Controller
         $categoryName = $category->title;
         $posts = $category->posts()->with('author')->latestFirst()->published()->simplePaginate($this->limit);
         return view('blog.index', compact('posts', 'categoryName'));
+    }
+
+    public function author(User $author){
+
+        $userName = $author->name;
+        $posts = $author->posts()->with('category')->latestFirst()->published()->simplePaginate($this->limit);
+        return view('blog.index', compact('posts', 'userName'));
     }
     /**
      * Store a newly created resource in storage.

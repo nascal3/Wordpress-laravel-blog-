@@ -21,7 +21,12 @@ Route::get('/blog/{post}', [
     'as' => 'blog.show'
 ]);
 
-Route::get('category/{category}', [
+Route::get('/category/{category}', [
     'uses' => 'BlogController@category',
     'as' => 'category'
+]);
+
+Route::get('/author/{author}', [
+   'uses' => 'BlogController@author',
+    'as' => 'author'
 ]);

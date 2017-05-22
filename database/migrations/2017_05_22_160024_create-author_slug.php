@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AtlterPostTableAddCategoryId extends Migration
+class CreateAuthorSlug extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AtlterPostTableAddCategoryId extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->integer('category_id')->unsigned()->nullable();
-            $table->foreign('category_id')->reference('category')->on('id')->onDelete('restrict');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('slug');
         });
     }
 
@@ -26,7 +25,7 @@ class AtlterPostTableAddCategoryId extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             //
         });
     }
