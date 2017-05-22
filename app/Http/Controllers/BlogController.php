@@ -19,13 +19,9 @@ class BlogController extends Controller
 
     public function index()
     {
-        $categories = category::with(['posts'=>function($query){
-            $query->published();
-        }])->orderBy('title', 'asc')->get();
-
 
         $posts = Post::with('author')->latestFirst()->published()->simplePaginate($this->limit);
-        return view('blog.index', compact('posts', 'categories'));
+        return view('blog.index', compact('posts'));
     }
 
     /**
@@ -38,18 +34,11 @@ class BlogController extends Controller
         //
     }
 
-    public function category($id){
-        $categories = category::with(['posts' => function($query){
-            $query->published();
-        }])->orderBy('title', 'asc')->get();
+    public function category(Category $category){
 
-
-        $posts = Post::with('author')
-            ->latestFirst()
-            ->published()
-            ->where('category_id', $id)
-            ->simplePaginate($this->limit);
-        return view('blog.index', compact('posts', 'categories'));
+        $categoryName = $category->title;
+        $posts = $category->posts()->with('author')->latestFirst()->published()->simplePaginate($this->limit);
+        return view('blog.index', compact('posts', 'categoryName'));
     }
     /**
      * Store a newly created resource in storage.
