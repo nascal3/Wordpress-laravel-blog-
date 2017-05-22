@@ -13,6 +13,10 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function category(){
+        return $this->belongsTo(category::class);
+    }
+
     public function getImageUrlAttribute($value) {
         $imageUrl = "";
         if(! is_null($this->image)){
@@ -38,4 +42,5 @@ class Post extends Model
     public function scopePublished($query) {
         return $query->where("published_at", "<=", Carbon::now());
     }
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\category;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -18,9 +19,13 @@ class BlogController extends Controller
 
     public function index()
     {
+        $categories = category::with(['posts'=>function($query){
+            $query->published();
+        }])->orderBy('title', 'asc')->get();
+
 
         $posts = Post::with('author')->latestFirst()->published()->simplePaginate($this->limit);
-        return view('blog.index', compact('posts'));
+        return view('blog.index', compact('posts', 'categories'));
     }
 
     /**
@@ -33,6 +38,19 @@ class BlogController extends Controller
         //
     }
 
+    public function category($id){
+        $categories = category::with(['posts' => function($query){
+            $query->published();
+        }])->orderBy('title', 'asc')->get();
+
+
+        $posts = Post::with('author')
+            ->latestFirst()
+            ->published()
+            ->where('category_id', $id)
+            ->simplePaginate($this->limit);
+        return view('blog.index', compact('posts', 'categories'));
+    }
     /**
      * Store a newly created resource in storage.
      *
