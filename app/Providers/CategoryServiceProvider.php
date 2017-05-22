@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Post;
 use Illuminate\Support\ServiceProvider;
 use App\category;
 
@@ -19,6 +20,11 @@ class CategoryServiceProvider extends ServiceProvider
                 $query->published();
             }])->orderBy('title', 'asc')->get();
             return $view->with('categories', $categories);
+        });
+
+        view()->composer('layouts.sidebar', function($view){
+            $popularPosts = Post::published()->popular()->take(3)->get();
+           return $view->with('popularPosts', $popularPosts);
         });
 
     }

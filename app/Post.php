@@ -23,7 +23,23 @@ class Post extends Model
 
             $imagePath = public_path()."/img/".$this->image;
             if(file_exists($imagePath)) {
-                    $imageUrl = asset("img/".$this->image);
+                    $imageUrl = asset("/img/".$this->image);
+            }
+        }
+
+        return $imageUrl;
+    }
+
+    function getImageThumbUrlAttribute($value){
+        $imageUrl = "";
+        if(! is_null($this->image)){
+
+            $ext = substr(strrchr($this->image,'.'), 1);
+            $thumbnail = str_replace('.{$ext}', '_thumb.{$ext}', $this->image);
+
+            $imagePath = public_path()."/img/".$thumbnail;
+            if(file_exists($imagePath)) {
+                $imageUrl = asset("/img/".$thumbnail);
             }
         }
 
@@ -41,6 +57,10 @@ class Post extends Model
 
     public function scopePublished($query) {
         return $query->where("published_at", "<=", Carbon::now());
+    }
+
+    public function scopePopular($query) {
+        return $query->orderBy("view_count", "desc");
     }
 
 }

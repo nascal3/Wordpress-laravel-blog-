@@ -34,45 +34,23 @@
             </div>
             <div class="widget-body">
                 <ul class="popular-posts">
+                    @foreach($popularPosts as $Post)
                     <li>
+                        @if($Post->image_thumb_url)
                         <div class="post-image">
-                            <a href="#">
-                                <img src="/img/Post_Image_5_thumb.jpg" />
+                            <a href="{{route('blog.show', $Post->slug)}}">
+                                <img src="{{$Post->image_thumb_url}}" />
                             </a>
                         </div>
+                        @endif
                         <div class="post-body">
-                            <h6><a href="#">Blog Post #5</a></h6>
+                            <h6><a href="{{route('blog.show', $Post->slug)}}">{{$Post->title}}</a></h6>
                             <div class="post-meta">
-                                <span>36 minutes ago</span>
+                                <span>{{$Post->date}}</span>
                             </div>
                         </div>
                     </li>
-                    <li>
-                        <div class="post-image">
-                            <a href="#">
-                                <img src="/img/Post_Image_4_thumb.jpg" />
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h6><a href="#">Blog Post #4</a></h6>
-                            <div class="post-meta">
-                                <span>36 minutes ago</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="post-image">
-                            <a href="#">
-                                <img src="/img/Post_Image_3_thumb.jpg" />
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h6><a href="#">Blog Post #3</a></h6>
-                            <div class="post-meta">
-                                <span>36 minutes ago</span>
-                            </div>
-                        </div>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
