@@ -69,6 +69,7 @@
 <script src="/js/fastclick.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/js/app.min.js"></script>
+@yield('script')
 
 </body>
 </html>

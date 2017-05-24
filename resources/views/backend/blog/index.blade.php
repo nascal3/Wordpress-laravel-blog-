@@ -11,8 +11,9 @@
                 <small>Blog Index</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active"><a href="#">All posts</a></li>
+                <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="{{route('backend.blog.index')}}">Blog</a> </li>
+                <li class="active">All posts</li>
             </ol>
         </section>
 
@@ -21,15 +22,22 @@
 
             <!-- Default box -->
             <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Title</h3>
-
+                <div class="box-header with-border clearfix">
+                    <h3 class="box-title pull-left">Blogs</h3>
+                    <div class="pull-left">
+                        <a  class="btn btn-sm btn-success" href="{{route('backend.blog.create')}}">Create blog</a>
+                    </div>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                             <i class="fa fa-minus"></i></button>
                     </div>
                 </div>
                 <div class="box-body">
+                    @if(!$posts->count())
+                    <div class="alert alert-warning">
+                        No records found!
+                    </div>
+                    @endif
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -69,7 +77,7 @@
                         {{ $posts->links() }}
                     </div>
                     <div class="pull-right">
-                        <?php $postsCount = $posts->count() ?>
+
                         <small>{{$postsCount}} Items</small>
                     </div>
                 </div>
@@ -80,4 +88,10 @@
         </section>
         <!-- /.content -->
     </div>
+@endsection
+
+@section('script')
+   <script type="application/javascript">
+       $('ul.pagination').addClass('no-margin pagination-sm');
+   </script>
 @endsection
