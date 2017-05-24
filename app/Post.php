@@ -10,6 +10,8 @@ class Post extends Model
 
     protected $dates = ['published_at'];
 
+    protected $fillable = ['title','body', 'slug', 'category_id', 'excerpt', 'published_at'];
+
     public function author() {
         return $this->belongsTo(User::class);
     }
@@ -50,6 +52,10 @@ class Post extends Model
     public function getDateAttribute($value)
     {
         return is_null($this->published_at) ? '' : $this->published_at->diffForHumans();
+    }
+
+    public function getPublishedAtAttribute($value) {
+        $this->attributes['published_at'] = $value?: NULL ;
     }
 
     public function scopelatestFirst($query) {
