@@ -28,7 +28,8 @@ class PostRequest extends FormRequest
             'slug' => 'required|unique:posts',
             'body' => 'required',
             'published_at' => 'date_format:Y-m-d H:i:s',
-            'category_id' => 'required'
+            'category_id' => 'required',
+            'image' => 'mimes:jpg,jpeg,bmp,png'
         ];
     }
 }

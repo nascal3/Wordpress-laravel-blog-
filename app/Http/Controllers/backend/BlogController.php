@@ -16,6 +16,15 @@ class BlogController extends BackendController
      *
      */
     protected $limit = 5;
+    protected $uploadPath;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->uploadPath = public_path('img');
+
+    }
+
 
     public function index()
     {
@@ -43,12 +52,26 @@ class BlogController extends BackendController
      */
     public function store(Requests\PostRequest $request)
     {
-
-        $request->user()->posts()->create($request->all());
+        $data = $this->handleRequest($request);
+        $request->user()->posts()->create($data);
 
         return redirect(route('backend.blog.index'))->with('message', 'Your new blog created successfully');
     }
 
+    private function handleRequest($request){
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $fileName = $image->getClientOriginalName();
+            $destination = $this->uploadPath;
+            $image->move($destination, $fileName);
+
+            $data['image'] = $fileName;
+        }
+        $data = $request->all();
+
+        return $data;
+    }
     /**
      * Display the specified resource.
      *

@@ -31,7 +31,6 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    Start creating your amazing application!
                     <a href="{{route('backend.blog.create')}}" class="btn btn-primary">Create new blog</a>
                 </div>
                 <!-- /.box-body -->
