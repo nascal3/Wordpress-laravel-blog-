@@ -342,3 +342,8 @@ ul.social-icons li {
 span.required {
     color: red;
 }
+
+.CodeMirror.cm-s-paper.CodeMirror-wrap {
+    height: 130px !important;
+    min-height: 130px !important;
+}

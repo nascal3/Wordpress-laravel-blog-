@@ -25,7 +25,7 @@
                 <div class="box-header with-border clearfix">
                     <h3 class="box-title pull-left">Blogs</h3>
                     <div class="pull-left">
-                        <a  class="btn btn-sm btn-success" href="{{route('backend.blog.create')}}">Create blog</a>
+                        <a  class="btn btn-sm btn-success" href="{{route('backend.blog.create')}}"><i class="fa fa-plus"></i> Create blog</a>
                     </div>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
