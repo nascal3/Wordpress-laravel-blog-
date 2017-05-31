@@ -72,6 +72,14 @@ class Post extends Model
         return $query->orderBy("view_count", "desc");
     }
 
+    public function scopeScheduled ($query) {
+        return $query->where("published_at", ">", Carbon::now());
+    }
+
+    public function scopeDraft ($query) {
+        return $query->whereNull("published_at");
+    }
+
     public function dateFormatted($showTimes = false){
         $format = "d/m/Y";
         if($showTimes) $format = $format . " H:i:s";
