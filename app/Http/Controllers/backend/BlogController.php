@@ -105,7 +105,8 @@ class BlogController extends BackendController
      */
     public function edit($id)
     {
-        //
+       $post = Post::FindOrFail($id);
+       return view('backend.blog.edit', compact('post'));
     }
 
     /**
@@ -115,9 +116,12 @@ class BlogController extends BackendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\PostRequest $request, $id)
     {
-        //
+        $post = Post::FindOrFail($id);
+        $data = $this->handleRequest($request);
+        $post->update($data);
+        return redirect(route('backend.blog.index'))->with('message', 'Your blog edited successfully');
     }
 
     /**
@@ -128,6 +132,13 @@ class BlogController extends BackendController
      */
     public function destroy($id)
     {
-        //
+        Post::FindOrFail($id)->delete();
+        return redirect(route('backend.blog.index'))->with('trash-message', ['Your post was moved to trash', $id]);
+    }
+
+    public function restore($id){
+        $post = Post::withTrashed()->FindOrFail($id);
+        $post->restore();
+        return redirect(route('backend.blog.index'))->with('message', 'Your post has been restored from trash.');
     }
 }

@@ -33,11 +33,7 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    @if(session('message'))
-                        <div class="alert alert-success">
-                            {{session('message')}}
-                        </div>
-                    @endif
+                    @include('backend.blog.message')
                     @if(!$posts->count())
                     <div class="alert alert-warning">
                         No records found!
@@ -57,12 +53,14 @@
                         @foreach($posts as $post)
                         <tr>
                             <td>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['backend.blog.destroy', $post->id]]) !!}
                                 <a href="{{route('backend.blog.edit', $post->id)}}" class="btn btn-xs btn-default">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a href="" class="btn btn-xs btn-danger">
+                                <button type="submit" class="btn btn-xs btn-danger">
                                     <i class="fa fa-times"></i>
-                                </a>
+                                </button>
+                                {!! Form::close() !!}
                             </td>
                             <td>{{$post->title}}</td>
                             <td>{{$post->author->name}}</td>

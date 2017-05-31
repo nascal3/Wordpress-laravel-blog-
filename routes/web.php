@@ -34,6 +34,11 @@ Auth::routes();
 
 Route::get('/home', 'backend\HomeController@index')->name('home');
 
+Route::put('backend/blog/restore/{blog}', [
+    'uses' => 'backend\BlogController@restore',
+    'as' => 'backend.blog.restore'
+    ]);
+
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::resource('/backend/blog', 'backend\BlogController', ['as' => 'backend']);
