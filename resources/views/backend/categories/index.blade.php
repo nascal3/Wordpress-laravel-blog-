@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 
-@section('title', 'My Blog | Blog index')
+@section('title', 'My Blog | Categories')
 
 @section('content')
     <div class="content-wrapper">
@@ -8,12 +8,12 @@
         <section class="content-header">
             <h1>
                 Hello {{Auth::user()->name}}
-                <small>Blog Index</small>
+                <small>Category Index</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li><a href="{{route('backend.blog.index')}}">Blog</a> </li>
-                <li class="active">All posts</li>
+                <li><a href="{{route('backend.categories.index')}}">Blog</a> </li>
+                <li class="active">All categories</li>
             </ol>
         </section>
 
@@ -23,20 +23,13 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border clearfix">
-                    <h3 class="box-title pull-left">Blogs</h3>
+                    <h3 class="box-title pull-left"></h3>
                     <div class="pull-left">
-                        <a  class="btn btn-sm btn-success" href="{{route('backend.blog.create')}}"><i class="fa fa-plus"></i> Create blog</a>
+                        <a  class="btn btn-sm btn-success" href="{{route('backend.categories.create')}}"><i class="fa fa-plus"></i> Create category</a>
                     </div>
 
                     <div class="pull-right">
-                        <?php $links=[] ?>
-                        @foreach($statusListLabel as $key => $value)
-                            @if($value)
-                                <?php $selected =  Request::get('status')==$key ? 'selected-status' : ''  ?>
-                                <?php $links[] = "<a class='$selected' href=\"?status={$key}\">". ucwords($key) ."({$value})</a>" ?>
-                            @endif
-                        @endforeach
-                       {!! implode(' | ', $links) !!}
+
 
                     </div>
 
@@ -44,26 +37,22 @@
                 </div>
                 <div class="box-body">
                     @include('backend.partials.message')
-                    @if(!$posts->count())
+                    @if(!$categories->count())
                         <div class="alert alert-warning">
                             No records found!
                         </div>
                     @else
-                        @if($onlyTrashed)
-                            @include('backend.blog.trash-table')
-                        @else
-                            @include('backend.blog.table')
-                        @endif
+                        @include('backend.categories.table')
                     @endif
 
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
                     <div class="pull-left">
-                        {{ $posts->appends(Request::query())->links() }}
+                        {{ $categories->links() }}
                     </div>
                     <div class="pull-right">
-                        <small>{{$postsCount}} Items</small>
+                        <small>{{$categoriesCount}} Items</small>
                     </div>
                 </div>
                 <!-- /.box-footer-->

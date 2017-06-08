@@ -16,7 +16,7 @@ class BlogController extends BackendController
      * @return \Illuminate\Http\Response
      *
      */
-    protected $limit = 5;
+
     protected $uploadPath;
 
     public function __construct()
