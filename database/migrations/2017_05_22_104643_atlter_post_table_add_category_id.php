@@ -15,7 +15,7 @@ class AtlterPostTableAddCategoryId extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->integer('category_id')->unsigned()->nullable();
-            $table->foreign('category_id')->reference('category')->on('id')->onDelete('restrict');
+            $table->foreign('category_id')->references('id')->on('category')->onDelete('restrict');
         });
     }
 

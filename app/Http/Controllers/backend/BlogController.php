@@ -43,22 +43,26 @@ class BlogController extends BackendController
             $postsCount = Post::scheduled()->count();
 
         }elseif ($status == 'draft') {
-            $posts = Post::draft()->with('category','author')->latest()->paginate($this->limit);
+            $posts = Post::draft()->with('category', 'author')->latest()->paginate($this->limit);
             $postsCount = Post::draft()->count();
 
-        } else {
+        }elseif ($status == 'Mine') {
+            $posts = $request->user()->posts()->with('category','author')->latest()->paginate($this->limit);
+            $postsCount = $request->user()->posts()->count();
+
+        }else {
             $posts = Post::with('category','author')->latest()->paginate($this->limit);
             $postsCount = Post::count();
 
         }
 
-        $statusListLabel = $this->statusList();
+        $statusListLabel = $this->statusList($request);
         return view('backend.blog.index', compact('posts','postsCount', 'onlyTrashed', 'statusListLabel'));
     }
 
-    private function statusList() {
+    private function statusList($request) {
         return [
-
+            'Mine' => $request->user()->posts()->count(),
             'all' => Post::count(),
             'published' => Post::published()->count(),
             'scheduled' => Post::scheduled()->count(),
