@@ -18,6 +18,24 @@
                 @endif
             </div>
 
+            <div class="form-group {{ $errors->has('slug') ? 'has-error' : '' }}">
+                {!! Form::label('Slug') !!}
+                {!! Form::text('slug', null, ['class' => 'form-control', 'id' => 'slug']) !!}
+
+                @if($errors->has('name'))
+                    <span class="help-block">{{$errors->first('slug')}}</span>
+                @endif
+            </div>
+
+            <div class="form-group {{ $errors->has('bio') ? 'has-error' : '' }}">
+                {!! Form::label('Bio') !!}
+                {!! Form::textArea('bio', null, ['class' => 'form-control', 'rows' => 5, 'id' => 'bio']) !!}
+
+                @if($errors->has('bio'))
+                    <span class="help-block">{{$errors->first('slug')}}</span>
+                @endif
+            </div>
+
             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                 {!! Form::label('Email') !!}
                 {!! Form::text('email', null, ['class' => 'form-control',  'id' => 'email']) !!}
@@ -42,6 +60,19 @@
                     <span class="help-block">{{$errors->first('password_confirmation')}}</span>
                 @endif
             </div>
+
+            <div class="form-group {{ $errors->has('role') ? 'has-error' : '' }}">
+                {!! Form::label('Role') !!}
+                @if($user->exists && $user->id == config('cms.default_user_id'))
+                    {!! Form::hidden('role', $user->roles->first()->id) !!}
+                    <p>{{$user->roles->first()->display_name}}</p>
+                @else
+                    {!! Form::select('role', \App\Role::pluck('display_name', 'id'), $user->exists ? $user->roles->first()->id : null,['class' => 'form-control', 'placeholder' => 'Select role']) !!}
+                    @if($errors->has('role'))
+                        <span class="help-block">{{$errors->first('password_confirmation')}}</span>
+                    @endif
+                @endif
+            </div>
         </div>
         <!-- /.box-body -->
 
@@ -51,3 +82,4 @@
     </div>
 </div>
 
+@include('backend.users.script')

@@ -41,24 +41,12 @@ class UsersController extends BackendController
      */
     public function store(Requests\UserStoreRequest $request)
     {
-       $post = $this->nameSlug($request);
+       $post = $request->all();
        $post['password'] = bcrypt($post['password']);
-       User::create($post);
+       $user = User::create($post);
+       $user->attachRole($request->role);
+
        return redirect("/backend/users")->with("message", "New User was created");
-    }
-
-    public function nameSlug($request) {
-        $data = $request->all();
-
-        $name = $request->input('name');
-
-        if(!empty($name)) {
-            $slug = str_replace(' ','-', $name);
-            $data['slug'] = $slug;
-        }
-
-        return $data;
-
     }
 
     /**
@@ -97,6 +85,10 @@ class UsersController extends BackendController
         $data = $request->all();
         $data['password'] = bcrypt($data['password']);
         $post->update($data);
+
+        $post->detachRoles($post->role);
+        $post->attachRole($request->role);
+
         return redirect("/backend/users")->with("message", "User was edited");
     }
 

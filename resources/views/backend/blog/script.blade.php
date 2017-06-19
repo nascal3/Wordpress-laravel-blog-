@@ -22,7 +22,7 @@
 
         $('#draft-btn').click(function(e){
             e.preventDefault();
-            $('#published_at').val("0000-00-00 00:00:00");
+            $('#published_at').val("");
             $('#post-form').submit();
         });
     </script>

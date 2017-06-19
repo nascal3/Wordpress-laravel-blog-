@@ -112,7 +112,7 @@
                             <img src="{{Auth::user()->gravator()}}" class="img-circle" alt="User Image">
 
                             <p>
-                                {{Auth::user()->name}} - Web Developer
+                                {{Auth::user()->name}} - {{Auth::user()->roles->first()->display_name}}
                             </p>
                         </li>
                         <!-- Menu Body -->
