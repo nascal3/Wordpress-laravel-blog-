@@ -7,6 +7,7 @@ use App\Post;
 use App\User;
 use Illuminate\Http\Request;
 
+
 class BlogController extends Controller
 {
     /**
@@ -21,8 +22,13 @@ class BlogController extends Controller
     public function index()
     {
 
-        $posts = Post::with('author')->latestFirst()->published()->simplePaginate($this->limit);
+
+        $posts = Post::with('author')->latestFirst()
+            ->published()
+            ->filter(\request('term'))
+            ->simplePaginate($this->limit);
         return view('blog.index', compact('posts'));
+
     }
 
     /**

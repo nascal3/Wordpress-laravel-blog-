@@ -10,12 +10,7 @@
                         <p>Nothing to show</p>
                     </div>
                 @else
-                    @if(isset($categoryName))
-                        <h3>Category: {{$categoryName}}</h3>
-                    @endif
-                    @if(isset($userName))
-                        <h3>Author: {{$userName}}</h3>
-                    @endif
+                    @include('blog.alert');
 
                     @foreach($posts as $post)
 
@@ -59,7 +54,7 @@
                     {{--<li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Newer</a></li>--}}
                     {{--<li class="next"><a href="#">Older <span aria-hidden="true">&rarr;</span></a></li>--}}
                   {{--</ul>--}}
-                    {{$posts->links()}}
+                    {{$posts->appends(request()->only(['term']))->links()}}
                 </nav>
             </div>
            @include('layouts.sidebar')

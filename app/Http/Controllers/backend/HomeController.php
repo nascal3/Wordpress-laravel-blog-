@@ -25,7 +25,9 @@ class HomeController extends BackendController
 
     public function update(Requests\AccountUpdateRequest $request ) {
         $user = $request->user();
-        $user->update($request->all());
+        $post = $request->all();
+        $post['password'] = bcrypt($post['password']);
+        $user->update($post);
 
         return redirect()->back()->with("message", "Successfully updated account");
     }

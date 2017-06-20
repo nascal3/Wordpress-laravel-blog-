@@ -76,8 +76,21 @@ class Post extends Model
         return $query->where("published_at", ">", Carbon::now());
     }
 
-    public function scopeDraft ($query) {
+    public function scopeDraft($query) {
         return $query->whereNull("published_at");
+    }
+
+    public function scopeFilter($query, $term) {
+        //check if term entered
+        if ($term){
+            $query->where(function ($q) use ($term){
+                $q->whereHas('author', function ($qr) use($term) {
+                    $qr->where('name','LIKE', "%{$term}%");
+                });
+                $q->orwhere('title', 'LIKE', "%{$term}%");
+                $q->orwhere('excerpt', 'LIKE', "%{$term}%");
+            });
+        }
     }
 
     public function dateFormatted($showTimes = false){
