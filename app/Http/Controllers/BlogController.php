@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\category;
 use App\Post;
+use App\Tag;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -44,14 +45,21 @@ class BlogController extends Controller
     public function category(Category $category){
 
         $categoryName = $category->title;
-        $posts = $category->posts()->with('author')->latestFirst()->published()->simplePaginate($this->limit);
+        $posts = $category->posts()->with('author','tags')->latestFirst()->published()->simplePaginate($this->limit);
         return view('blog.index', compact('posts', 'categoryName'));
+    }
+
+    public function tag(Tag $tag){
+
+        $tagName = $tag->name;
+        $posts = $tag->posts()->with('author','tags', 'category')->latestFirst()->published()->simplePaginate($this->limit);
+        return view('blog.index', compact('posts', 'tagName'));
     }
 
     public function author(User $author){
 
         $userName = $author->name;
-        $posts = $author->posts()->with('category')->latestFirst()->published()->simplePaginate($this->limit);
+        $posts = $author->posts()->with('category', 'tags')->latestFirst()->published()->simplePaginate($this->limit);
         return view('blog.index', compact('posts', 'userName'));
     }
     /**

@@ -22,6 +22,10 @@ class Post extends Model
         return $this->belongsTo(category::class);
     }
 
+    public function tags() {
+        return $this->belongsToMany(Tag::class);
+    }
+
     public function getImageUrlAttribute($value) {
         $imageUrl = "";
         if(! is_null($this->image)){

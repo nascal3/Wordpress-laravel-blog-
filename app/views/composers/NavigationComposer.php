@@ -8,6 +8,7 @@
 
 namespace app\views\composers;
 
+use App\Tag;
 use Illuminate\View\View;
 use App\Post;
 use App\category;
@@ -17,8 +18,8 @@ class NavigationComposer
 {
        public function compose(View $view){
            $this->composeCategories($view);
-
            $this->composePopularPost($view);
+           $this->composeTags($view);
        }
 
        private function composeCategories(View $view) {
@@ -32,6 +33,11 @@ class NavigationComposer
        private function composePopularPost(View $view) {
           $popularPosts = Post::published()->popular()->take(3)->get();
           $view->with('popularPosts', $popularPosts);
+       }
+
+       private function composeTags(View $view){
+            $tags = Tag::has('posts')->get();
+            $view->with('tags', $tags);
        }
 
 }
