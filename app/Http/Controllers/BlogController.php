@@ -26,7 +26,7 @@ class BlogController extends Controller
 
         $posts = Post::with('author')->latestFirst()
             ->published()
-            ->filter(\request('term'))
+            ->filter(request()->only(['term','year','month']))
             ->simplePaginate($this->limit);
         return view('blog.index', compact('posts'));
 

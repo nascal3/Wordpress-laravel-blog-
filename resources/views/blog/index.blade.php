@@ -59,7 +59,7 @@
                     {{--<li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Newer</a></li>--}}
                     {{--<li class="next"><a href="#">Older <span aria-hidden="true">&rarr;</span></a></li>--}}
                   {{--</ul>--}}
-                    {{$posts->appends(request()->only(['term']))->links()}}
+                    {{$posts->appends(request()->only(['term','month','year']))->links()}}
                 </nav>
             </div>
            @include('layouts.sidebar')

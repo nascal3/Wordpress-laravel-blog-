@@ -19,11 +19,11 @@ class postsTableSeeder extends Seeder
 
         $posts = [];
         $faker = Factory::create();
-        $date = Carbon::create(2017, 5, 18, 9);
+        $date = Carbon::now()->modify('-1 year');
 
-        for($i=0; $i<10; $i++){
+        for($i=1; $i<=36; $i++){
 
-            $date->addDays(1);
+            $date->addDays(10);
             $publishedDate = clone ($date);
             $creation_date =  clone($date);
             $image = "Post_image_".rand(1, 5).".jpg";
@@ -37,7 +37,7 @@ class postsTableSeeder extends Seeder
                 'image' => rand(0, 1) == 1 ? $image : NULL,
                 'created_at' => $creation_date,
                 'updated_at' => $creation_date,
-                'published_at' => $i < 5 ? $publishedDate : (rand(0, 1) == 0 ? NULL : $publishedDate->addDays(4))
+                'published_at' => $i < 30 ? $publishedDate : (rand(0, 1) == 0 ? NULL : $publishedDate->addDays(4))
 
             ];
         }
